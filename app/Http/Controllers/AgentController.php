@@ -7,6 +7,13 @@ use App\Models\Agent;
 use  App\Services\AgentService;
 use App\Http\Controllers\Controller;
 use Database\Seeders\AgentSeeder;
+use App\Models\Scopes\AncientScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+
+#[ScopedBy([AncientScope::class])]
 
 class AgentController extends Controller
 {
@@ -87,5 +94,12 @@ class AgentController extends Controller
     {
         $agent = Agent::find($id);
         $agent->forceDelete();
+    }
+
+
+    #[Scope]
+    protected function accurate(Builder $query): void
+    {
+        $query->where('accuracy', '>', 90);
     }
 }

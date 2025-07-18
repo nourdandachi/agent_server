@@ -12,6 +12,9 @@ class Agent extends Model
     use HasFactory;
 
     use Prunable;
+
+    
+    public $incrementing = false;
  
     public function prunable(): Builder
     {
